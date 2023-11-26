@@ -1,5 +1,10 @@
 // Study of the trait of the Rust language.
 
+// In this program, we define a common complex trait "Complex".
+// And implement it for both cartesian and polar representation of
+// the complex number.
+// We can see one trait can support both representation.
+
 fn main() -> Result<(), ()> {
     // Create a trait to be an interface of a complex number.
     // The implementation of the complex ( cartesian or polar )
