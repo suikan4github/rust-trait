@@ -1,4 +1,9 @@
+// Study of the trait of the Rust language.
+
 fn main() -> Result<(), ()> {
+    // Create a trait to be an interface of a complex number.
+    // The implementation of the complex ( cartesian or polar )
+    // is not affected to here.
     trait Complex {
         fn re(&self) -> f32;
         fn im(&self) -> f32;
@@ -8,25 +13,31 @@ fn main() -> Result<(), ()> {
         fn set_polar(&mut self, r: f32, a: f32);
     }
 
+    // an example cartesian representation of complex number
     struct CartesianComplex {
         re: f32,
         im: f32,
     }
 
+    // an example polar representation of complex number.
     struct PolarComplex {
         radius: f32,
         angle: f32,
     }
 
+    // Let's implement the Complex trait for the CartesianComplex type.
     impl Complex for CartesianComplex {
+        // We don't need to convert.
         fn re(&self) -> f32 {
             self.re
         }
 
+        // We don't need to convert.
         fn im(&self) -> f32 {
             self.im
         }
 
+        // We need to convert from cartesian to polar.
         fn radius(&self) -> f32 {
             (self.re.powi(2) + self.im.powi(2)).sqrt()
         }
@@ -35,45 +46,57 @@ fn main() -> Result<(), ()> {
             self.im.atan2(self.re)
         }
 
+        // We don't need to convert.
         fn set_cartesian(&mut self, r: f32, i: f32) {
             self.re = r;
             self.im = i;
         }
 
+        // We need to convert from polar to cartesian .
         fn set_polar(&mut self, r: f32, a: f32) {
             self.re = r * a.cos();
             self.im = r * a.sin();
         }
     }
 
+    // Let's implement the Complex trait for the PolarComplex type.
     impl Complex for PolarComplex {
+        // We need to convert from polar to cartesian.
         fn re(&self) -> f32 {
             self.radius * self.angle.cos()
         }
 
+        // We need to convert from polar to cartesian.
         fn im(&self) -> f32 {
             self.radius * self.angle.sin()
         }
 
+        // We don't need to convert.
         fn radius(&self) -> f32 {
             self.radius
         }
 
+        // We don't need to convert.
         fn angle(&self) -> f32 {
             self.angle
         }
 
+        // We need to convert from polar to cartesian.
         fn set_cartesian(&mut self, r: f32, i: f32) {
             self.radius = (r.powi(2) + i.powi(2)).sqrt();
             self.angle = i.atan2(r);
         }
 
+        // We don't need to convert.
         fn set_polar(&mut self, r: f32, a: f32) {
             self.radius = r;
             self.angle = a;
         }
     }
 
+    // Now, let's see on the terminal.
+
+    // Variable under test.
     let p = PolarComplex {
         radius: 3.0,
         angle: 1.5707964,
@@ -85,6 +108,7 @@ fn main() -> Result<(), ()> {
     println!("p's Real      : {}", p.re());
     println!("p's Imaginary : {}", p.im());
 
+    // Variable under test.
     let q = CartesianComplex { re: 0.0, im: 3.0 };
 
     println!("");
