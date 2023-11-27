@@ -1,2 +1,9 @@
 # rust-trait
-Study of the trai system of Rust
+Rust言語のトレイトを利用する習作
+
+# 説明
+
+# ライセンス
+[MITライセンス](LICENSE)
+
+
